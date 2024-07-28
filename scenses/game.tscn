@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://chpaelsck1m18"]
+
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_lci0p"]
+[ext_resource type="PackedScene" uid="uid://dn3xxjv65w3ei" path="res://scenses/player.tscn" id="2_xblti"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_lci0p")
+
+[node name="Player" parent="." instance=ExtResource("2_xblti")]
+position = Vector2(434, 282)
+
+[node name="PlayerSpawnPosition" type="Marker2D" parent="."]
+position = Vector2(270, 700)
+
+[node name="LaserContainer" type="Node2D" parent="."]
