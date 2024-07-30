@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+class_name Player
+
 signal laser_shot(laser_scene, location)
 
 @export var speed =  300
@@ -11,7 +13,7 @@ signal laser_shot(laser_scene, location)
 var laser_scene = preload("res://scenses/laser.tscn")
 var shoot_cd := false
 
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_pressed("shoot"):
 		if !shoot_cd:
 			shoot_cd = true
@@ -19,10 +21,13 @@ func _process(delta):
 			await get_tree().create_timer(rate_of_fire).timeout
 			shoot_cd = false
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	var direction = Vector2(Input.get_axis("move_left", "move_right"), Input.get_axis("move_up", "move_down"))
 	velocity = direction * speed
 	move_and_slide()
 
 func shoot():
 	laser_shot.emit(laser_scene, muzzle.global_position)
+
+func die():
+	queue_free()
