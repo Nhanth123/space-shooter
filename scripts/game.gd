@@ -1,7 +1,11 @@
 extends Node2D
 
+@export var enemy_scenes : Array[PackedScene] = []
+
 @onready var player_spawn_position = $PlayerSpawnPosition
 @onready var laser_container = $LaserContainer
+@onready var timer  = $EnemySpawnerTimer
+@onready var enemy_container = $EnemyContainer
 
 var player =  null
 
@@ -16,8 +20,14 @@ func _process(_delta):
 	elif Input.is_action_just_pressed("reset"):
 		get_tree().reload_current_scene()
 
-
 func _on_player_laser_shot(laser_scene, location):
 	var laser = laser_scene.instantiate()
 	laser.global_position = location
 	laser_container.add_child(laser)
+
+
+func _on_enemy_spawner_timer_timeout():
+	var e = enemy_scenes.pick_random().instantiate()
+	e.global_position = Vector2(randf_range(50, 540), -50)
+	enemy_container.add_child(e)
+	
