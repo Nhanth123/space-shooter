@@ -8,6 +8,7 @@ extends Node2D
 @onready var enemy_container = $EnemyContainer
 @onready var hud = $UILayer/HUD
 @onready var game_over_screen = $UILayer/GameOverScreen
+@onready var parallax_background = $ParallaxBackground
 
 
 var player =  null
@@ -16,7 +17,11 @@ var score := 0:
 		score = value
 		hud.label_score = score
 
-var high_score := 0
+var high_score
+
+var scroll_speed = 100
+
+
 
 func _ready():
 	var save_file = FileAccess.open("user://save.data", FileAccess.READ)
@@ -32,11 +37,20 @@ func _ready():
 	player.laser_shot.connect(_on_player_laser_shot)
 	player.killed.connect(_on_player_killed)
 
-func _process(_delta):
+func _process(delta):
 	if Input.is_action_just_pressed("quit"):
 		get_tree().quit()
 	elif Input.is_action_just_pressed("reset"):
 		get_tree().reload_current_scene()
+	
+	if timer.wait_time > 0.5:
+		timer.wait_time -= delta * 0.005
+	elif timer.wait_time < 0.5:
+		timer.wait_time = 0.5
+	
+	parallax_background.scroll_offset.y += delta * scroll_speed
+	if parallax_background.scroll_offset.y >= 960:
+		parallax_background.scroll_offset.y = 0
 
 func _on_player_laser_shot(laser_scene, location):
 	var laser = laser_scene.instantiate()

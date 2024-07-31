@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://chpaelsck1m18"]
+[gd_scene load_steps=10 format=3 uid="uid://chpaelsck1m18"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_lci0p"]
 [ext_resource type="PackedScene" uid="uid://dn3xxjv65w3ei" path="res://scenses/player.tscn" id="2_xblti"]
@@ -6,6 +6,14 @@
 [ext_resource type="PackedScene" uid="uid://blnrs6mn6vk1r" path="res://scenses/hud.tscn" id="4_fj85p"]
 [ext_resource type="PackedScene" uid="uid://c3sf80lcrm2o6" path="res://scenses/diver_enemy.tscn" id="4_l468g"]
 [ext_resource type="PackedScene" uid="uid://wdv0kknfm8nu" path="res://scenses/game_over_screen.tscn" id="5_x508e"]
+[ext_resource type="Texture2D" uid="uid://c7hsw7w7s1b8" path="res://assets/Backgrounds/purple.png" id="6_kt8w4"]
+[ext_resource type="Texture2D" uid="uid://c1jbkibfnwutm" path="res://assets/PNG/Effects/star1.png" id="7_j3cr0"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7q3ya"]
+particle_flag_disable_z = true
+angular_velocity_min = -1000.0
+angular_velocity_max = -1000.0
+gravity = Vector3(0, 0, 0)
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_lci0p")
@@ -18,7 +26,26 @@ enemy_scenes = Array[PackedScene]([ExtResource("3_3d8s8"), ExtResource("4_l468g"
 [node name="GameOverScreen" parent="UILayer" instance=ExtResource("5_x508e")]
 visible = false
 
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+
+[node name="PurpleStar" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+texture_repeat = 2
+texture = ExtResource("6_kt8w4")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 540, 960)
+
+[node name="StarParticleEffect" type="GPUParticles2D" parent="."]
+position = Vector2(270, -50)
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_7q3ya")
+texture = ExtResource("7_j3cr0")
+lifetime = 1.5
+
 [node name="EnemySpawnerTimer" type="Timer" parent="."]
+wait_time = 2.5
 autostart = true
 
 [node name="Player" parent="." instance=ExtResource("2_xblti")]
