@@ -1,13 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://chpaelsck1m18"]
+[gd_scene load_steps=6 format=3 uid="uid://chpaelsck1m18"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_lci0p"]
 [ext_resource type="PackedScene" uid="uid://dn3xxjv65w3ei" path="res://scenses/player.tscn" id="2_xblti"]
 [ext_resource type="PackedScene" uid="uid://cr64gokg4m78p" path="res://scenses/enemy.tscn" id="3_3d8s8"]
+[ext_resource type="PackedScene" uid="uid://blnrs6mn6vk1r" path="res://scenses/hud.tscn" id="4_fj85p"]
 [ext_resource type="PackedScene" uid="uid://c3sf80lcrm2o6" path="res://scenses/diver_enemy.tscn" id="4_l468g"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_lci0p")
 enemy_scenes = Array[PackedScene]([ExtResource("3_3d8s8"), ExtResource("4_l468g")])
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="UILayer" instance=ExtResource("4_fj85p")]
 
 [node name="EnemySpawnerTimer" type="Timer" parent="."]
 autostart = true

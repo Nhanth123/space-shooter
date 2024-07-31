@@ -6,10 +6,17 @@ extends Node2D
 @onready var laser_container = $LaserContainer
 @onready var timer  = $EnemySpawnerTimer
 @onready var enemy_container = $EnemyContainer
+@onready var hud = $UILayer/HUD
 
 var player =  null
+var score := 0:
+	set(value):
+		score = value
+		hud.label_score = score
+
 
 func _ready():
+	score = 0
 	player = get_tree().get_first_node_in_group("player_group")
 	player.global_position = player_spawn_position.global_position
 	player.laser_shot.connect(_on_player_laser_shot)
@@ -29,5 +36,8 @@ func _on_player_laser_shot(laser_scene, location):
 func _on_enemy_spawner_timer_timeout():
 	var e = enemy_scenes.pick_random().instantiate()
 	e.global_position = Vector2(randf_range(50, 540), -50)
+	e.killed.connect(_on_enemy_killed)
 	enemy_container.add_child(e)
 	
+func _on_enemy_killed(points):
+	score += points
