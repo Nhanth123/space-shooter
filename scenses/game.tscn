@@ -1,16 +1,25 @@
-[gd_scene load_steps=10 format=3 uid="uid://chpaelsck1m18"]
+[gd_scene load_steps=13 format=3 uid="uid://chpaelsck1m18"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_lci0p"]
 [ext_resource type="PackedScene" uid="uid://dn3xxjv65w3ei" path="res://scenses/player.tscn" id="2_xblti"]
 [ext_resource type="PackedScene" uid="uid://cr64gokg4m78p" path="res://scenses/enemy.tscn" id="3_3d8s8"]
 [ext_resource type="PackedScene" uid="uid://blnrs6mn6vk1r" path="res://scenses/hud.tscn" id="4_fj85p"]
 [ext_resource type="PackedScene" uid="uid://c3sf80lcrm2o6" path="res://scenses/diver_enemy.tscn" id="4_l468g"]
+[ext_resource type="AudioStream" uid="uid://bf5ryade5yyx0" path="res://assets/Audio/laser.ogg" id="4_pq5gk"]
+[ext_resource type="AudioStream" uid="uid://rf8komoxuqcy" path="res://assets/Audio/hit.wav" id="5_jjyqs"]
 [ext_resource type="PackedScene" uid="uid://wdv0kknfm8nu" path="res://scenses/game_over_screen.tscn" id="5_x508e"]
+[ext_resource type="AudioStream" uid="uid://chcp70upbutr3" path="res://assets/Audio/explode.wav" id="6_0neqy"]
 [ext_resource type="Texture2D" uid="uid://c7hsw7w7s1b8" path="res://assets/Backgrounds/purple.png" id="6_kt8w4"]
-[ext_resource type="Texture2D" uid="uid://c1jbkibfnwutm" path="res://assets/PNG/Effects/star1.png" id="7_j3cr0"]
+[ext_resource type="Texture2D" uid="uid://bxrujr88yl2ns" path="res://assets/PNG/Effects/star.png" id="7_h3gwr"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7q3ya"]
 particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(270, 1, 1)
+direction = Vector3(0, -1, 0)
+spread = 0.0
+initial_velocity_min = -1000.0
+initial_velocity_max = -1000.0
 angular_velocity_min = -1000.0
 angular_velocity_max = -1000.0
 gravity = Vector3(0, 0, 0)
@@ -18,6 +27,17 @@ gravity = Vector3(0, 0, 0)
 [node name="Game" type="Node2D"]
 script = ExtResource("1_lci0p")
 enemy_scenes = Array[PackedScene]([ExtResource("3_3d8s8"), ExtResource("4_l468g")])
+
+[node name="SFX" type="Node" parent="."]
+
+[node name="LaserSound" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("4_pq5gk")
+
+[node name="HitSound" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("5_jjyqs")
+
+[node name="ExplodeSound" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("6_0neqy")
 
 [node name="UILayer" type="CanvasLayer" parent="."]
 
@@ -27,8 +47,10 @@ enemy_scenes = Array[PackedScene]([ExtResource("3_3d8s8"), ExtResource("4_l468g"
 visible = false
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+visible = false
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(0, 960)
 
 [node name="PurpleStar" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
 texture_repeat = 2
@@ -41,8 +63,9 @@ region_rect = Rect2(0, 0, 540, 960)
 position = Vector2(270, -50)
 amount = 20
 process_material = SubResource("ParticleProcessMaterial_7q3ya")
-texture = ExtResource("7_j3cr0")
-lifetime = 1.5
+texture = ExtResource("7_h3gwr")
+lifetime = 1.25
+preprocess = 5.0
 
 [node name="EnemySpawnerTimer" type="Timer" parent="."]
 wait_time = 2.5

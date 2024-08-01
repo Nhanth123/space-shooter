@@ -3,6 +3,7 @@ extends Area2D
 class_name Enemy
 
 signal killed(points)
+signal hit
 
 @export var speed = 150
 @export var hp = 1
@@ -27,3 +28,5 @@ func take_damage(amount):
 	if hp <= 0:
 		killed.emit(points)
 		die()
+	else:
+		hit.emit()
