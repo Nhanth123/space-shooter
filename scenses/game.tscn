@@ -13,7 +13,6 @@
 [ext_resource type="Texture2D" uid="uid://bxrujr88yl2ns" path="res://assets/PNG/Effects/star.png" id="7_h3gwr"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7q3ya"]
-particle_flag_disable_z = true
 emission_shape = 3
 emission_box_extents = Vector3(270, 1, 1)
 direction = Vector3(0, -1, 0)
@@ -35,9 +34,11 @@ stream = ExtResource("4_pq5gk")
 
 [node name="HitSound" type="AudioStreamPlayer" parent="SFX"]
 stream = ExtResource("5_jjyqs")
+volume_db = -10.0
 
 [node name="ExplodeSound" type="AudioStreamPlayer" parent="SFX"]
 stream = ExtResource("6_0neqy")
+volume_db = -10.0
 
 [node name="UILayer" type="CanvasLayer" parent="."]
 
@@ -47,7 +48,6 @@ stream = ExtResource("6_0neqy")
 visible = false
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
-visible = false
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_mirroring = Vector2(0, 960)
