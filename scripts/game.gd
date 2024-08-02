@@ -52,7 +52,7 @@ func _process(delta):
 		timer.wait_time = 0.5
 	
 	parallax_background.scroll_offset.y += delta * scroll_speed
-	if parallax_background.scroll_offset.y >= 960:
+	if parallax_background.scroll_offset.y >= 960: # Reset to normal size
 		parallax_background.scroll_offset.y = 0
 
 func _on_player_laser_shot(laser_scene, location):
